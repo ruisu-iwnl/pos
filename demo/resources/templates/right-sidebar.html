@@ -1,0 +1,62 @@
+<aside id="right-sidebar" class="bg-white border-start right-sidebar-container hidden">
+    <div class="d-flex flex-column h-100 p-4">
+        <h5 class="fw-bold mb-3">Ordered Items <span class="badge bg-primary ms-2" id="item-count">0</span></h5>
+        
+        <div class="flex-grow-1 overflow-auto mb-4" id="ordered-items-list">
+            <div class="d-flex justify-content-between align-items-start mb-3" data-item-id="1">
+                <div class="flex-grow-1">
+                    <span class="text-muted">2x</span> <span class="text-dark">Pasta with Roast Beef</span>
+                </div>
+                <span class="fw-bold">$20.00</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <h5 class="fw-bold mb-3">Payment Summary</h5>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Subtotal</span>
+                <span class="fw-bold" id="subtotal">$0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Tax</span>
+                <span class="fw-bold" id="tax">$0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span class="text-muted">Donation for Palestine</span>
+                <span class="fw-bold" id="donation">$1.00</span>
+            </div>
+            <div class="d-flex justify-content-between pt-3 border-top">
+                <span class="fw-bold">Total Payable</span>
+                <span class="fw-bold" id="total-payable">$0.00</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <h5 class="fw-bold mb-3">Payment Method</h5>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary flex-fill payment-method-btn" data-method="cash">
+                    <i class="bi bi-cash-coin d-block mb-1"></i>
+                    <small>Cash</small>
+                </button>
+                <button class="btn btn-primary flex-fill payment-method-btn active" data-method="card">
+                    <i class="bi bi-credit-card d-block mb-1"></i>
+                    <small>Card</small>
+                </button>
+                <button class="btn btn-outline-secondary flex-fill payment-method-btn" data-method="scan">
+                    <i class="bi bi-qr-code-scan d-block mb-1"></i>
+                    <small>Scan</small>
+                </button>
+            </div>
+        </div>
+        
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary flex-fill">
+                <i class="bi bi-printer me-2"></i>Print
+            </button>
+            <button class="btn btn-primary flex-fill" id="place-order-btn">
+                <i class="bi bi-power me-2"></i>Order
+            </button>
+        </div>
+    </div>
+</aside>
+
