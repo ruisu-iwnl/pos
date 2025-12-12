@@ -35,10 +35,31 @@ class TemplateLoader {
             throw new Error(`Target element not found: ${target}`);
         }
 
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+
+        const stylesheets = tempDiv.querySelectorAll('link[rel="stylesheet"]');
+        stylesheets.forEach(oldLink => {
+            const href = oldLink.getAttribute('href');
+            if (href) {
+                const existingLink = document.querySelector(`link[href="${href}"]`);
+                if (!existingLink) {
+                    const newLink = document.createElement('link');
+                    newLink.rel = 'stylesheet';
+                    newLink.type = 'text/css';
+                    newLink.href = href;
+                    document.head.appendChild(newLink);
+                }
+            }
+            oldLink.remove();
+        });
+
         if (append) {
-            targetElement.insertAdjacentHTML('beforeend', html);
+            while (tempDiv.firstChild) {
+                targetElement.appendChild(tempDiv.firstChild);
+            }
         } else {
-            targetElement.innerHTML = html;
+            targetElement.innerHTML = tempDiv.innerHTML;
         }
 
         const scripts = targetElement.querySelectorAll('script');
