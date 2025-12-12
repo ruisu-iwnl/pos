@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         await templateLoader.injectTemplate('left-sidebar', '#content-wrapper', true);
         
+        const toggleBtn = document.createElement('button');
+        toggleBtn.id = 'sidebar-toggle';
+        toggleBtn.className = 'sidebar-toggle-btn';
+        toggleBtn.type = 'button';
+        toggleBtn.innerHTML = '<i class="bi bi-chevron-right"></i>';
+        document.body.appendChild(toggleBtn);
+        
         const mainContent = document.createElement('main');
         mainContent.id = 'main-content';
         mainContent.className = 'flex-grow-1';
@@ -21,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         setupNavigation();
         setInitialActiveSidebarItem('dashboard');
+        setupSidebarToggle();
         
     } catch (error) {
         console.error('Error loading templates:', error);
@@ -74,5 +82,19 @@ function updateActiveSidebarItem(activeLink) {
     activeLink.classList.remove('text-dark');
     activeLink.classList.add('text-white');
     activeLink.style.backgroundColor = '#17a2b8';
+}
+
+function setupSidebarToggle() {
+    const toggleBtn = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const contentWrapper = document.getElementById('content-wrapper');
+    
+    if (toggleBtn && sidebar && contentWrapper) {
+        toggleBtn.addEventListener('click', () => {
+            const isCollapsed = sidebar.classList.toggle('collapsed');
+            contentWrapper.classList.toggle('sidebar-collapsed');
+            toggleBtn.classList.toggle('collapsed', isCollapsed);
+        });
+    }
 }
 
