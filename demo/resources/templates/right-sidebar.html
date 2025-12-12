@@ -2,13 +2,7 @@
     <div class="d-flex flex-column h-100 p-4">
         <h5 class="fw-bold mb-3">Ordered Items <span class="badge bg-primary ms-2" id="item-count">0</span></h5>
         
-        <div class="flex-grow-1 overflow-auto mb-4" id="ordered-items-list">
-            <div class="d-flex justify-content-between align-items-start mb-3" data-item-id="1">
-                <div class="flex-grow-1">
-                    <span class="text-muted">2x</span> <span class="text-dark">Pasta with Roast Beef</span>
-                </div>
-                <span class="fw-bold">$20.00</span>
-            </div>
+        <div class="overflow-auto mb-4" id="ordered-items-list" style="max-height: 200px; min-height: 100px;">
         </div>
         
         <div class="mb-4">
@@ -37,6 +31,14 @@
                 <span class="text-muted">Donation for Palestine</span>
                 <span class="fw-bold" id="donation">$1.00</span>
             </div> -->
+            <div class="mb-3 pt-2 border-top">
+                <label class="form-label small text-muted mb-1">Cash Given</label>
+                <input type="number" class="form-control form-control-sm" id="cash-input" placeholder="0.00" step="0.01" min="0">
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span class="fw-bold">Change</span>
+                <span class="fw-bold" id="change">$0.00</span>
+            </div>
             <div class="d-flex justify-content-between pt-3 border-top">
                 <span class="fw-bold">Total Payable</span>
                 <span class="fw-bold" id="total-payable">$0.00</span>
