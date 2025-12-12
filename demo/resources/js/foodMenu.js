@@ -253,6 +253,98 @@
             }
         });
         
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('button') && e.target.closest('button').querySelector('.bi-printer')) {
+                const rightSidebar = document.getElementById('right-sidebar');
+                if (!rightSidebar) return;
+                
+                const cashInput = document.getElementById('cash-input');
+                const cashValue = cashInput ? (cashInput.value || '0.00') : '0.00';
+                
+                const activePaymentMethod = document.querySelector('.payment-method-btn.active');
+                let paymentMethodText = 'Card';
+                if (activePaymentMethod) {
+                    const method = activePaymentMethod.dataset.method;
+                    if (method === 'cash') paymentMethodText = 'Cash';
+                    else if (method === 'card') paymentMethodText = 'Card';
+                    else if (method === 'scan') paymentMethodText = 'QR';
+                }
+                
+                const now = new Date();
+                const dateStr = (now.getMonth() + 1) + '/' + now.getDate() + '/' + (now.getFullYear() % 100);
+                const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = rightSidebar.innerHTML;
+                
+                const cashInputEl = tempDiv.querySelector('#cash-input');
+                if (cashInputEl) {
+                    const cashDisplay = document.createElement('div');
+                    cashDisplay.className = 'd-flex justify-content-between mb-3';
+                    cashDisplay.innerHTML = `
+                        <span class="text-muted">Cash Given</span>
+                        <span class="fw-bold">$${parseFloat(cashValue).toFixed(2)}</span>
+                    `;
+                    cashInputEl.parentElement.replaceWith(cashDisplay);
+                }
+                
+                const paymentMethodSections = tempDiv.querySelectorAll('.mb-4');
+                paymentMethodSections.forEach(section => {
+                    if (section.querySelector('.payment-method-btn')) {
+                        section.innerHTML = `
+                            <h5 class="fw-bold mb-3">Payment Method</h5>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Payment Method</span>
+                                <span class="fw-bold">${paymentMethodText}</span>
+                            </div>
+                        `;
+                    }
+                });
+                
+                const buttons = tempDiv.querySelectorAll('button');
+                buttons.forEach(btn => btn.remove());
+                
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Receipt</title>
+                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+                        <style>
+                            body { padding: 20px; font-family: 'Courier New', 'Consolas', 'Monaco', monospace, sans-serif; }
+                            .receipt-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+                            .receipt-title { text-align: center; font-weight: bold; font-size: 1.5rem; margin-bottom: 10px; }
+                            @media print {
+                                body { padding: 0; }
+                                .btn { display: none !important; }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="receipt-title">
+                            <span class="fw-bold">Kunwari</span>
+                            <span class="text-muted ms-1">Resto</span>
+                        </div>
+                        <hr>
+                        <div class="receipt-header">
+                            <div>${dateStr}, ${timeStr}</div>
+                            <div class="fw-bold">Receipt</div>
+                        </div>
+                        ${tempDiv.innerHTML}
+                        <script>
+                            window.onload = function() {
+                                window.print();
+                            };
+                        </script>
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+            }
+        });
+        
         const paymentMethodBtns = document.querySelectorAll('.payment-method-btn');
         paymentMethodBtns.forEach(btn => {
             btn.addEventListener('click', function() {
