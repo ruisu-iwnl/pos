@@ -1,4 +1,7 @@
 (function() {
+    if (window.quantityHandlerAttached) return;
+    window.quantityHandlerAttached = true;
+    
     function initFoodMenu() {
         const categoryCarousel = document.getElementById('category-carousel');
         const categoryLeftBtn = document.getElementById('category-left-btn');
@@ -80,30 +83,59 @@
             });
         });
         
-        const quantityBtns = document.querySelectorAll('.quantity-btn');
-        quantityBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const card = this.closest('.food-card');
-                const quantitySpan = card.querySelector('.quantity-value');
-                let quantity = parseInt(quantitySpan.textContent) || 0;
-                
-                if (this.textContent === '+') {
-                    quantity++;
-                } else if (this.textContent === '-' && quantity > 0) {
-                    quantity--;
-                }
-                
-                quantitySpan.textContent = quantity;
-                
-                if (quantity > 0) {
-                    card.style.border = '2px solid #17a2b8';
-                } else {
-                    card.style.border = '1px solid #e0e0e0';
-                }
-                
-                updateCart();
-            });
-        });
+        const handleQuantityClick = function(e) {
+            const btn = e.target.closest('.quantity-btn');
+            if (!btn) return;
+            
+            if (btn.dataset.processing) {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            btn.dataset.processing = 'true';
+            
+            const card = btn.closest('.food-card');
+            if (!card) {
+                delete btn.dataset.processing;
+                return;
+            }
+            
+            const quantitySpan = card.querySelector('.quantity-value');
+            if (!quantitySpan) {
+                delete btn.dataset.processing;
+                return;
+            }
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            let quantity = parseInt(quantitySpan.textContent) || 0;
+            
+            if (btn.classList.contains('quantity-plus')) {
+                quantity++;
+            } else if (btn.classList.contains('quantity-minus') && quantity > 0) {
+                quantity--;
+            } else {
+                delete btn.dataset.processing;
+                return;
+            }
+            
+            quantitySpan.textContent = quantity;
+            
+            if (quantity > 0) {
+                card.style.border = '2px solid #17a2b8';
+            } else {
+                card.style.border = '1px solid #e0e0e0';
+            }
+            
+            updateCart();
+            
+            setTimeout(() => {
+                delete btn.dataset.processing;
+            }, 200);
+        };
+        
+        document.addEventListener('click', handleQuantityClick, true);
         
         function updateCart() {
             const rightSidebar = document.getElementById('right-sidebar');
