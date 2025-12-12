@@ -19,13 +19,15 @@ body {
     flex: 1;
     overflow: hidden;
     position: relative;
+    display: flex;
 }
 
 #main-content {
-    flex: 1;
+    flex: 1 1 0;
     overflow-y: auto;
     transition: margin-left 0.2s ease-in;
     margin-left: 0;
+    min-width: 0;
 }
 
 footer {
@@ -93,5 +95,55 @@ footer {
 .sidebar-toggle-btn i {
     font-size: 18px;
     color: #333;
+}
+
+.right-sidebar-container {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+    background-color: white;
+    transition: min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 1;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+}
+
+.right-sidebar-container.hidden {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+.right-sidebar-container.hidden > * {
+    visibility: hidden;
+}
+
+.payment-method-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px;
+    border-radius: 8px;
+}
+
+.payment-method-btn i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.payment-method-btn.active {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: white;
 }
 
