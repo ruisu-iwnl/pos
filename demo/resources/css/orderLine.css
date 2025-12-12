@@ -1,0 +1,118 @@
+#order-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+#main-content .container-fluid {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.2s ease-in;
+    pointer-events: auto;
+}
+
+.carousel-nav-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.carousel-nav-btn i {
+    font-size: 18px;
+    color: #333;
+}
+
+.category-nav-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.2s ease-in;
+}
+
+.category-nav-btn:hover {
+    background-color: #f8f9fa;
+}
+
+#category-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.food-card {
+    transition: border-color 0.2s ease-in;
+}
+
+.food-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+button.quantity-btn,
+.btn.quantity-btn {
+    border-radius: 50% !important;
+    position: relative !important;
+    background-color: transparent !important;
+    border: 1px solid #e0e0e0 !important;
+    color: #333 !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    padding: 0 !important;
+    padding-bottom: 5px !important;
+    margin: 0 !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    font-size: 22px !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.quantity-btn,
+.quantity-btn * {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.quantity-minus:hover {
+    background-color: #ffebee !important;
+    border-color: #ef5350 !important;
+    color: #c62828 !important;
+}
+
+.quantity-plus:hover {
+    background-color: #e8f5e9 !important;
+    border-color: #66bb6a !important;
+    color: #2e7d32 !important;
+}
+
+.quantity-value {
+    min-width: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
