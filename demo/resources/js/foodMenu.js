@@ -197,18 +197,61 @@
                 
                 itemCountBadge.textContent = String(totalItems).padStart(2, '0');
                 
-                const tax = subtotal * 0.06;
+                const vatable = subtotal;
+                const vatAmount = subtotal * 0.06;
+                const vatExempt = 0.00;
+                const zeroRated = 0.00;
                 const donation = 1.00;
-                const totalPayable = subtotal + tax + donation;
+                const totalPayable = subtotal + vatAmount + donation;
                 
-                document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-                document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
-                document.getElementById('donation').textContent = `$${donation.toFixed(2)}`;
-                document.getElementById('total-payable').textContent = `$${totalPayable.toFixed(2)}`;
+                const subtotalEl = document.getElementById('subtotal');
+                const vatableEl = document.getElementById('vatable');
+                const vatAmountEl = document.getElementById('vat-amount');
+                const vatExemptEl = document.getElementById('vat-exempt');
+                const zeroRatedEl = document.getElementById('zero-rated');
+                const donationEl = document.getElementById('donation');
+                const totalPayableEl = document.getElementById('total-payable');
+                
+                if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+                if (vatableEl) vatableEl.textContent = `$${vatable.toFixed(2)}`;
+                if (vatAmountEl) vatAmountEl.textContent = `$${vatAmount.toFixed(2)}`;
+                if (vatExemptEl) vatExemptEl.textContent = `$${vatExempt.toFixed(2)}`;
+                if (zeroRatedEl) zeroRatedEl.textContent = `$${zeroRated.toFixed(2)}`;
+                if (donationEl) donationEl.textContent = `$${donation.toFixed(2)}`;
+                if (totalPayableEl) totalPayableEl.textContent = `$${totalPayable.toFixed(2)}`;
+                
+                updateChange();
             } else {
                 rightSidebar.classList.add('hidden');
             }
         }
+        
+        function updateChange() {
+            const cashInput = document.getElementById('cash-input');
+            const totalPayableEl = document.getElementById('total-payable');
+            const changeEl = document.getElementById('change');
+            
+            if (!cashInput || !totalPayableEl || !changeEl) return;
+            
+            const cashGiven = parseFloat(cashInput.value) || 0;
+            const totalPayableText = totalPayableEl.textContent.replace('$', '').replace(',', '');
+            const totalPayable = parseFloat(totalPayableText) || 0;
+            const change = cashGiven - totalPayable;
+            
+            if (change >= 0) {
+                changeEl.textContent = `$${change.toFixed(2)}`;
+                changeEl.style.color = '';
+            } else {
+                changeEl.textContent = `-$${Math.abs(change).toFixed(2)}`;
+                changeEl.style.color = '#dc3545';
+            }
+        }
+        
+        document.addEventListener('input', function(e) {
+            if (e.target.id === 'cash-input') {
+                updateChange();
+            }
+        });
         
         const paymentMethodBtns = document.querySelectorAll('.payment-method-btn');
         paymentMethodBtns.forEach(btn => {
