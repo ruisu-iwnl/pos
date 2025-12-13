@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            height: 100vh;
+            display: flex;
+        }
+        
+        .main-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .left-section {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .right-section {
+            width: 300px;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Courier New', 'Consolas', 'Monaco', monospace, sans-serif;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+        
+        .categories {
+            text-align: center;
+        }
+        
+        .category-btn {
+            margin: 5px;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        
+        .category-btn:hover {
+            background: #f5f5f5;
+        }
+        
+        .category-btn.active {
+            background: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+        .items-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .item-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            width: 180px;
+            animation: scaleIn 0.2s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .item-price {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        
+        .quantity-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .cart {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tax-section {
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        
+        .tax-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.85em;
+        }
+        
+        .total {
+            font-weight: bold;
+            font-size: 1em;
+            padding-top: 15px;
+            border-top: 2px solid #333;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .checkout-btn {
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        
+        .checkout-btn:hover {
+            background: #218838;
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .empty-message {
+            color: #999;
+            font-style: italic;
+        }
+        
+        .restaurant-header {
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .restaurant-left {
+            flex: 1;
+        }
+        
+        .restaurant-right {
+            text-align: right;
+        }
+        
+        .restaurant-name {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .restaurant-info {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .report-btn {
+            padding: 6px 12px;
+            background: #000;
+            color: white;
+            border: 1px solid #000;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .report-btn:hover {
+            background: #333;
+            border-color: #333;
+        }
+        
+        .date-time {
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .modal-overlay {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, background 0.15s ease-in-out;
+        }
+        
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.15s ease-in-out, opacity 0.15s ease-in-out;
+        }
+        
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .modal-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .modal-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .modal-summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.9em;
+        }
+        
+        .modal-total {
+            font-weight: bold;
+            font-size: 1.1em;
+            padding-top: 10px;
+            border-top: 2px solid #333;
+            margin-top: 10px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .modal-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        
+        .modal-btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .modal-btn-cancel:hover {
+            background: #5a6268;
+        }
+        
+        .modal-btn-confirm {
+            background: #28a745;
+            color: white;
+        }
+        
+        .modal-btn-confirm:hover {
+            background: #218838;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-section">
+            <div class="restaurant-header">
+                <div class="restaurant-left">
+                    <div class="restaurant-name">DECISIVE Fine Dining Restaurant</div>
+                    <div class="restaurant-info">
+                        Science City of Munoz<br>
+                        0935-813-229<br>
+                        Owner: Diana Organez
+                    </div>
+                </div>
+                <div class="restaurant-right">
+                    <div class="date-time">
+                        <div id="date-display"></div>
+                        <div id="time-display"></div>
+                    </div>
+                    <button class="report-btn" onclick="generateMonthlyReport()">Generate Monthly Report</button>
+                </div>
+            </div>
+            
+            <div class="categories">
+                <button class="category-btn active" data-category="appetizer">Appetizer</button>
+                <button class="category-btn" data-category="soup">Soup</button>
+                <button class="category-btn" data-category="main-dish">Main Dish</button>
+                <button class="category-btn" data-category="dessert">Dessert</button>
+                <button class="category-btn" data-category="drinks">Drinks</button>
+            </div>
+
+            <div id="items-container" class="items-container">
+                <p class="empty-message">Select a category to view items</p>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <h3>Order Summary</h3>
+            <div id="cart-items" class="cart-items">
+                <p class="empty-message">No items in cart</p>
+            </div>
+            <div class="tax-section">
+                <div class="tax-row">
+                    <span>Subtotal:</span>
+                    <span>₱<span id="subtotal">0.00</span></span>
+                </div>
+                <div class="tax-row">
+                    <span>Vatable:</span>
+                    <span>₱<span id="vatable">0.00</span></span>
+                </div>
+                <div class="tax-row">
+                    <span>VAT Amount:</span>
+                    <span>₱<span id="vat-amount">0.00</span></span>
+                </div>
+                <div class="tax-row">
+                    <span>VAT Exempt:</span>
+                    <span>₱<span id="vat-exempt">0.00</span></span>
+                </div>
+                <div class="tax-row">
+                    <span>Zero Rated:</span>
+                    <span>₱<span id="zero-rated">0.00</span></span>
+                </div>
+            </div>
+            <div class="total">
+                Total: ₱<span id="total-amount">0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn" disabled>Checkout</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Confirm Order</div>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeCheckoutModal()">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmCheckout()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Author: Emanuel Luis V. Pelaez
+         * Date Created: December 13, 2025
+         */
+        
+        console.log('%c═══════════════════════════════════════', 'color: #000; font-weight: bold;');
+        console.log('%c  POS Demo System', 'color: #000; font-size: 16px; font-weight: bold;');
+        console.log('%c  Author: Emanuel Luis V. Pelaez', 'color: #666; font-size: 12px;');
+        console.log('%c  Date Created: December 13, 2025', 'color: #666; font-size: 12px;');
+        console.log('%c═══════════════════════════════════════', 'color: #000; font-weight: bold;');
+        
+        const menu = {
+            appetizer: [
+                { id: 1, name: "Spring Rolls", price: 120 },
+                { id: 2, name: "Chicken Wings", price: 150 },
+                { id: 3, name: "Nachos", price: 180 },
+                { id: 16, name: "Foie Gras", price: 850 },
+                { id: 17, name: "Oysters Rockefeller", price: 680 },
+                { id: 18, name: "Truffle Arancini", price: 520 },
+                { id: 19, name: "Caviar Toast", price: 1200 },
+                { id: 20, name: "Lobster Bisque", price: 450 },
+                { id: 21, name: "Wagyu Carpaccio", price: 980 },
+                { id: 22, name: "Scallop Ceviche", price: 580 }
+            ],
+            soup: [
+                { id: 4, name: "Chicken Soup", price: 100 },
+                { id: 5, name: "Tomato Soup", price: 90 },
+                { id: 6, name: "Corn Soup", price: 95 },
+                { id: 23, name: "Lobster Bisque", price: 650 },
+                { id: 24, name: "French Onion Soup", price: 320 },
+                { id: 25, name: "Cream of Mushroom", price: 280 },
+                { id: 26, name: "Bisque de Homard", price: 750 },
+                { id: 27, name: "Gazpacho", price: 240 },
+                { id: 28, name: "Truffle Soup", price: 580 },
+                { id: 29, name: "Clam Chowder", price: 380 }
+            ],
+            "main-dish": [
+                { id: 7, name: "Grilled Chicken", price: 250 },
+                { id: 8, name: "Beef Steak", price: 350 },
+                { id: 9, name: "Fish Fillet", price: 200 },
+                { id: 30, name: "Wagyu Ribeye", price: 2800 },
+                { id: 31, name: "Lobster Thermidor", price: 1850 },
+                { id: 32, name: "Duck Confit", price: 1200 },
+                { id: 33, name: "Rack of Lamb", price: 1650 },
+                { id: 34, name: "Truffle Risotto", price: 980 },
+                { id: 35, name: "Sea Bass en Papillote", price: 850 },
+                { id: 36, name: "Filet Mignon", price: 1950 },
+                { id: 37, name: "Coq au Vin", price: 1100 },
+                { id: 38, name: "Bouillabaisse", price: 1350 }
+            ],
+            dessert: [
+                { id: 10, name: "Ice Cream", price: 80 },
+                { id: 11, name: "Cake Slice", price: 120 },
+                { id: 12, name: "Fruit Salad", price: 100 },
+                { id: 39, name: "Crème Brûlée", price: 320 },
+                { id: 40, name: "Chocolate Soufflé", price: 450 },
+                { id: 41, name: "Tiramisu", price: 380 },
+                { id: 42, name: "Panna Cotta", price: 280 },
+                { id: 43, name: "Lemon Tart", price: 350 },
+                { id: 44, name: "Molten Lava Cake", price: 420 },
+                { id: 45, name: "Cheesecake", price: 320 },
+                { id: 46, name: "Macarons (6pcs)", price: 480 }
+            ],
+            drinks: [
+                { id: 13, name: "Coke", price: 50 },
+                { id: 14, name: "Orange Juice", price: 60 },
+                { id: 15, name: "Coffee", price: 70 },
+                { id: 47, name: "Champagne", price: 2500 },
+                { id: 48, name: "Wine (Glass)", price: 450 },
+                { id: 49, name: "Craft Cocktail", price: 580 },
+                { id: 50, name: "Espresso", price: 120 },
+                { id: 51, name: "Cappuccino", price: 150 },
+                { id: 52, name: "Fresh Lemonade", price: 180 },
+                { id: 53, name: "Iced Tea", price: 120 },
+                { id: 54, name: "Sparkling Water", price: 100 }
+            ]
+        };
+
+        let cart = {};
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                const category = this.dataset.category;
+                displayItems(category);
+            });
+        });
+
+        function displayItems(category) {
+            const container = document.getElementById('items-container');
+            const items = menu[category] || [];
+            
+            if (items.length === 0) {
+                container.innerHTML = '<p class="empty-message">No items available</p>';
+                return;
+            }
+
+            container.innerHTML = items.map((item, index) => `
+                <div class="item-card" style="animation-delay: ${index * 0.03}s;">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price">₱${item.price.toFixed(2)}</div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                        <span id="qty-${item.id}">${cart[item.id]?.quantity || 0}</span>
+                        <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function increaseQuantity(itemId) {
+            const item = findItemById(itemId);
+            if (!item) return;
+
+            if (!cart[itemId]) {
+                cart[itemId] = { ...item, quantity: 0 };
+            }
+            cart[itemId].quantity++;
+            updateDisplay();
+        }
+
+        function decreaseQuantity(itemId) {
+            if (!cart[itemId] || cart[itemId].quantity <= 0) return;
+            
+            cart[itemId].quantity--;
+            if (cart[itemId].quantity === 0) {
+                delete cart[itemId];
+            }
+            updateDisplay();
+        }
+
+        function findItemById(itemId) {
+            for (const category in menu) {
+                const item = menu[category].find(i => i.id === itemId);
+                if (item) return item;
+            }
+            return null;
+        }
+
+        function updateDisplay() {
+            const activeCategory = document.querySelector('.category-btn.active')?.dataset.category;
+            if (activeCategory && menu[activeCategory]) {
+                menu[activeCategory].forEach(item => {
+                    const qtyElement = document.getElementById(`qty-${item.id}`);
+                    if (qtyElement) {
+                        qtyElement.textContent = cart[item.id]?.quantity || 0;
+                    }
+                });
+            }
+
+            const cartContainer = document.getElementById('cart-items');
+            const cartItems = Object.values(cart).filter(item => item.quantity > 0);
+
+            if (cartItems.length === 0) {
+                cartContainer.innerHTML = '<p class="empty-message">No items in cart</p>';
+                document.getElementById('checkout-btn').disabled = true;
+                document.getElementById('subtotal').textContent = '0.00';
+                document.getElementById('vatable').textContent = '0.00';
+                document.getElementById('vat-amount').textContent = '0.00';
+                document.getElementById('vat-exempt').textContent = '0.00';
+                document.getElementById('zero-rated').textContent = '0.00';
+                document.getElementById('total-amount').textContent = '0.00';
+            } else {
+                cartContainer.innerHTML = cartItems.map(item => `
+                    <div class="cart-item">
+                        <span>${item.name} x${item.quantity}</span>
+                        <span>₱${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('');
+                document.getElementById('checkout-btn').disabled = false;
+            }
+
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const vatable = subtotal;
+            const vatAmount = subtotal * 0.12;
+            const vatExempt = 0.00;
+            const zeroRated = 0.00;
+            const total = subtotal + vatAmount;
+            
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('vatable').textContent = vatable.toFixed(2);
+            document.getElementById('vat-amount').textContent = vatAmount.toFixed(2);
+            document.getElementById('vat-exempt').textContent = vatExempt.toFixed(2);
+            document.getElementById('zero-rated').textContent = zeroRated.toFixed(2);
+            document.getElementById('total-amount').textContent = total.toFixed(2);
+        }
+
+        function showCheckoutModal() {
+            const cartItems = Object.values(cart).filter(item => item.quantity > 0);
+            if (cartItems.length === 0) return;
+
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const vatAmount = subtotal * 0.12;
+            const total = subtotal + vatAmount;
+
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    ${cartItems.map(item => `
+                        <div class="modal-summary-item">
+                            <span>${item.name} x${item.quantity}</span>
+                            <span>₱${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="modal-summary-item">
+                    <span>Subtotal:</span>
+                    <span>₱${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="modal-summary-item">
+                    <span>VAT (12%):</span>
+                    <span>₱${vatAmount.toFixed(2)}</span>
+                </div>
+                <div class="modal-summary-item modal-total">
+                    <span>Total:</span>
+                    <span>₱${total.toFixed(2)}</span>
+                </div>
+            `;
+
+            document.getElementById('checkout-modal').classList.add('show');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.remove('show');
+        }
+
+        function confirmCheckout() {
+            if (Object.keys(cart).length === 0) return;
+            
+            cart = {};
+            updateDisplay();
+            closeCheckoutModal();
+            const activeCategory = document.querySelector('.category-btn.active')?.dataset.category || 'appetizer';
+            displayItems(activeCategory);
+        }
+
+        document.getElementById('checkout-btn').addEventListener('click', function() {
+            showCheckoutModal();
+        });
+
+        document.getElementById('checkout-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCheckoutModal();
+            }
+        });
+
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            
+            document.getElementById('date-display').textContent = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('time-display').textContent = now.toLocaleTimeString('en-US', timeOptions);
+        }
+
+        function generateMonthlyReport() {
+            const allMenuItems = [];
+            for (const category in menu) {
+                menu[category].forEach(item => {
+                    allMenuItems.push({ ...item, category: category });
+                });
+            }
+
+            const today = new Date();
+            const monthDates = [];
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                monthDates.push(new Date(date));
+            }
+
+            const createHeader = () => {
+                const startDate = monthDates[0].toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                const endDate = monthDates[monthDates.length - 1].toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                const reportDate = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                
+                return [
+                    ['DECISIVE Fine Dining Restaurant'],
+                    ['Science City of Munoz'],
+                    ['0935-813-229'],
+                    ['Owner: Diana Organez'],
+                    [],
+                    ['Report Generated Date:', reportDate],
+                    ['Date Range Covered:', `${startDate} - ${endDate}`],
+                    []
+                ];
+            };
+
+            const salesData = [];
+            let totalSales = 0;
+            let totalItems = 0;
+
+            monthDates.forEach(date => {
+                const daySales = Math.floor(Math.random() * 50) + 20;
+                
+                for (let i = 0; i < daySales; i++) {
+                    const randomItem = allMenuItems[Math.floor(Math.random() * allMenuItems.length)];
+                    const quantity = Math.floor(Math.random() * 3) + 1; 
+                    const unitPrice = randomItem.price;
+                    const total = unitPrice * quantity;
+                    
+                    salesData.push({
+                        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                        day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+                        itemName: randomItem.name,
+                        category: randomItem.category,
+                        quantity: quantity,
+                        unitPrice: unitPrice,
+                        total: total
+                    });
+                    
+                    totalSales += total;
+                    totalItems += quantity;
+                }
+            });
+
+            const wb = XLSX.utils.book_new();
+
+            const dailySummary = [];
+            const dailyTotals = {};
+            
+            salesData.forEach(sale => {
+                const date = sale.date;
+                if (!dailyTotals[date]) {
+                    dailyTotals[date] = { date: date, day: sale.day, sales: 0, items: 0, transactions: 0 };
+                }
+                dailyTotals[date].sales += sale.total;
+                dailyTotals[date].items += sale.quantity;
+                dailyTotals[date].transactions += 1;
+            });
+
+            dailySummary.push(...createHeader());
+            dailySummary.push(['Daily Sales Summary']);
+            dailySummary.push([]);
+            dailySummary.push(['Date', 'Day', 'Transactions', 'Items Sold', 'Total Sales (₱)']);
+            
+            Object.values(dailyTotals).forEach(day => {
+                dailySummary.push([
+                    day.date,
+                    day.day,
+                    day.transactions,
+                    day.items,
+                    day.sales.toFixed(2)
+                ]);
+            });
+
+            dailySummary.push([]);
+            dailySummary.push(['Month Total', '', 
+                Object.values(dailyTotals).reduce((sum, d) => sum + d.transactions, 0),
+                totalItems,
+                totalSales.toFixed(2)
+            ]);
+
+            const ws1 = XLSX.utils.aoa_to_sheet(dailySummary);
+            ws1['!cols'] = [
+                { wch: 15 }, { wch: 10 }, { wch: 15 }, { wch: 12 }, { wch: 15 }
+            ];
+            XLSX.utils.book_append_sheet(wb, ws1, 'Daily Summary');
+
+            const detailedData = [];
+            detailedData.push(...createHeader());
+            detailedData.push(['Detailed Sales']);
+            detailedData.push([]);
+            detailedData.push(['Date', 'Day', 'Item Name', 'Category', 'Quantity', 'Unit Price (₱)', 'Total (₱)']);
+            
+            salesData.forEach(sale => {
+                detailedData.push([
+                    sale.date,
+                    sale.day,
+                    sale.itemName,
+                    sale.category,
+                    sale.quantity,
+                    sale.unitPrice.toFixed(2),
+                    sale.total.toFixed(2)
+                ]);
+            });
+
+            detailedData.push([]);
+            detailedData.push(['Grand Total', '', '', '', totalItems, '', totalSales.toFixed(2)]);
+
+            const ws2 = XLSX.utils.aoa_to_sheet(detailedData);
+            ws2['!cols'] = [
+                { wch: 12 }, { wch: 8 }, { wch: 25 }, { wch: 12 }, { wch: 10 }, { wch: 15 }, { wch: 15 }
+            ];
+            XLSX.utils.book_append_sheet(wb, ws2, 'Detailed Sales');
+
+            const categorySummary = [];
+            const categoryTotals = {};
+            
+            salesData.forEach(sale => {
+                if (!categoryTotals[sale.category]) {
+                    categoryTotals[sale.category] = { category: sale.category, items: 0, sales: 0 };
+                }
+                categoryTotals[sale.category].items += sale.quantity;
+                categoryTotals[sale.category].sales += sale.total;
+            });
+
+            categorySummary.push(...createHeader());
+            categorySummary.push(['Category Sales Summary']);
+            categorySummary.push([]);
+            categorySummary.push(['Category', 'Items Sold', 'Total Sales (₱)']);
+            
+            Object.values(categoryTotals).sort((a, b) => b.sales - a.sales).forEach(cat => {
+                categorySummary.push([
+                    cat.category.charAt(0).toUpperCase() + cat.category.slice(1).replace('-', ' '),
+                    cat.items,
+                    cat.sales.toFixed(2)
+                ]);
+            });
+
+            categorySummary.push([]);
+            categorySummary.push(['Total', totalItems, totalSales.toFixed(2)]);
+
+            const ws3 = XLSX.utils.aoa_to_sheet(categorySummary);
+            ws3['!cols'] = [
+                { wch: 20 }, { wch: 12 }, { wch: 15 }
+            ];
+            XLSX.utils.book_append_sheet(wb, ws3, 'Category Summary');
+
+            const itemSummary = [];
+            const itemTotals = {};
+            
+            salesData.forEach(sale => {
+                if (!itemTotals[sale.itemName]) {
+                    itemTotals[sale.itemName] = { name: sale.itemName, quantity: 0, sales: 0 };
+                }
+                itemTotals[sale.itemName].quantity += sale.quantity;
+                itemTotals[sale.itemName].sales += sale.total;
+            });
+
+            itemSummary.push(...createHeader());
+            itemSummary.push(['Top Selling Items']);
+            itemSummary.push([]);
+            itemSummary.push(['Item Name', 'Quantity Sold', 'Total Sales (₱)']);
+            
+            Object.values(itemTotals)
+                .sort((a, b) => b.quantity - a.quantity)
+                .slice(0, 20)
+                .forEach(item => {
+                    itemSummary.push([
+                        item.name,
+                        item.quantity,
+                        item.sales.toFixed(2)
+                    ]);
+                });
+
+            const ws4 = XLSX.utils.aoa_to_sheet(itemSummary);
+            ws4['!cols'] = [
+                { wch: 30 }, { wch: 15 }, { wch: 15 }
+            ];
+            XLSX.utils.book_append_sheet(wb, ws4, 'Top Items');
+
+            const filename = `Monthly_Report_${today.toISOString().split('T')[0]}.xlsx`;
+            
+            XLSX.writeFile(wb, filename);
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        document.querySelector('.category-btn').click();
+    </script>
+</body>
+</html>
