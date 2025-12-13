@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         mainContent.className = 'flex-grow-1';
         contentWrapper.appendChild(mainContent);
         
-        await templateLoader.injectTemplate('dashboard', '#main-content', false);
+        await templateLoader.injectTemplate('order-line', '#main-content', false);
 
         await templateLoader.injectTemplate('footer', '#app-container', true);
         
         setupNavigation();
-        setInitialActiveSidebarItem('dashboard');
+        setInitialActiveSidebarItem('order-line');
         setupSidebarToggle();
         
     } catch (error) {
