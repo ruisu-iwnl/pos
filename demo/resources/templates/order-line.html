@@ -143,194 +143,35 @@
     
     <div class="position-relative mb-4">
         <div id="category-carousel" class="d-flex gap-2 overflow-x-auto pb-2" style="scrollbar-width: none; -ms-overflow-style: none;">
-            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
+            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center active" type="button" data-category="all" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 2px solid #17a2b8; background-color: white;">
                 <i class="bi bi-menu-button-wide-fill mb-2" style="font-size: 2rem; color: #333;"></i>
                 <span class="fw-bold mb-1" style="font-size: 0.95rem;">All Menu</span>
-                <small class="text-muted" style="font-size: 0.8rem;">154 items</small>
+                <small class="text-muted category-count" style="font-size: 0.8rem;">8 items</small>
             </button>
-            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
+            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" data-category="special" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
                 <i class="bi bi-cake2-fill mb-2" style="font-size: 2rem; color: #333;"></i>
                 <span class="fw-bold mb-1" style="font-size: 0.95rem;">Special</span>
-                <small class="text-muted" style="font-size: 0.8rem;">19 items</small>
+                <small class="text-muted category-count" style="font-size: 0.8rem;">1 items</small>
             </button>
-            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
+            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" data-category="soup" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
                 <i class="bi bi-cup-fill mb-2" style="font-size: 2rem; color: #333;"></i>
                 <span class="fw-bold mb-1" style="font-size: 0.95rem;">Soups</span>
-                <small class="text-muted" style="font-size: 0.8rem;">3 items</small>
+                <small class="text-muted category-count" style="font-size: 0.8rem;">0 items</small>
             </button>
-            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
+            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" data-category="dessert" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
                 <i class="bi bi-cake2-fill mb-2" style="font-size: 2rem; color: #333;"></i>
                 <span class="fw-bold mb-1" style="font-size: 0.95rem;">Desserts</span>
-                <small class="text-muted" style="font-size: 0.8rem;">19 items</small>
+                <small class="text-muted category-count" style="font-size: 0.8rem;">0 items</small>
             </button>
-            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
-                <i class="bi bi-record-circle-fill mb-2" style="font-size: 2rem; color: #333;"></i>
-                <span class="fw-bold mb-1" style="font-size: 0.95rem;">Chickens</span>
-                <small class="text-muted" style="font-size: 0.8rem;">10 items</small>
+            <button class="btn btn-light category-btn d-flex flex-column align-items-center justify-content-center" type="button" data-category="burger" style="border-radius: 12px; padding: 16px 20px; min-width: 110px; border: 1px solid #e0e0e0; background-color: white;">
+                <i class="bi bi-egg-fried mb-2" style="font-size: 2rem; color: #333;"></i>
+                <span class="fw-bold mb-1" style="font-size: 0.95rem;">Burgers</span>
+                <small class="text-muted category-count" style="font-size: 0.8rem;">7 items</small>
             </button>
         </div>
     </div>
     
-    <div class="row g-3">
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Bacon Cheese with Chips & Drinks" data-item-price="15.00">
-                <img src="resources/static/images/baconcheesewithchipsdrinks.png" class="card-img-top" alt="Bacon Cheese with Chips & Drinks" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Burger</small>
-                    <h6 class="card-title mt-1 mb-2">Bacon Cheese with Chips & Drinks</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$15.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Black Pepper" data-item-price="12.00">
-                <img src="resources/static/images/blackpepper.png" class="card-img-top" alt="Black Pepper" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Burger</small>
-                    <h6 class="card-title mt-1 mb-2">Black Pepper</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$12.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Cheese Bacon" data-item-price="14.00">
-                <img src="resources/static/images/cheesebacon.png" class="card-img-top" alt="Cheese Bacon" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Burger</small>
-                    <h6 class="card-title mt-1 mb-2">Cheese Bacon</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$14.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Cheese Burger" data-item-price="10.00">
-                <img src="resources/static/images/cheeseburger.png" class="card-img-top" alt="Cheese Burger" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Burger</small>
-                    <h6 class="card-title mt-1 mb-2">Cheese Burger</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$10.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Chili Con with Nachos" data-item-price="13.00">
-                <img src="resources/static/images/chiliconwithnachos.png" class="card-img-top" alt="Chili Con with Nachos" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Special</small>
-                    <h6 class="card-title mt-1 mb-2">Chili Con with Nachos</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$13.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Chimichurri Burger" data-item-price="16.00">
-                <img src="resources/static/images/chimichurriburger.png" class="card-img-top" alt="Chimichurri Burger" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Burger</small>
-                    <h6 class="card-title mt-1 mb-2">Chimichurri Burger</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$16.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Double Minute Burger" data-item-price="18.00">
-                <img src="resources/static/images/doubleminuteburger.png" class="card-img-top" alt="Double Minute Burger" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Burger</small>
-                    <h6 class="card-title mt-1 mb-2">Double Minute Burger</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$18.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3 col-sm-6">
-            <div class="card food-card h-100 d-flex flex-column" style="border-radius: 12px; border: 1px solid #e0e0e0;" data-item-name="Minute Burger" data-item-price="9.00">
-                <img src="resources/static/images/minuteburger.png" class="card-img-top" alt="Minute Burger" style="height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">
-                <div class="card-body d-flex flex-column flex-grow-1" style="position: relative;">
-                    <small class="text-muted">Burger</small>
-                    <h6 class="card-title mt-1 mb-2">Minute Burger</h6>
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <span class="fw-bold item-price">$9.00</span>
-                    </div>
-                </div>
-                <div class="quantity-selector" style="background-color: #f8f9fa; padding: 12px; border-radius: 0 0 12px 12px; border-top: 1px solid #e0e0e0;">
-                    <div class="d-flex justify-content-center align-items-center" style="gap: 4px;">
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-minus" style="width: 30px; height: 30px; padding: 0;">-</button>
-                        <span class="quantity-value" style="min-width: 20px; text-align: center;">0</span>
-                        <button class="btn btn-sm btn-outline-secondary quantity-btn quantity-plus" style="width: 30px; height: 30px; padding: 0;">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row g-3" id="food-items-container">
     </div>
 </div>
 
@@ -338,13 +179,4 @@
 
 <script src="resources/js/orderLineCarousel.js"></script>
 <script src="resources/js/foodMenu.js"></script>
-
-<script>
-(async function() {
-    const contentWrapper = document.getElementById('content-wrapper');
-    if (contentWrapper && !document.getElementById('right-sidebar')) {
-        await templateLoader.injectTemplate('right-sidebar', '#content-wrapper', true);
-        contentWrapper.classList.add('has-right-sidebar');
-    }
-})();
-</script>
+<script src="resources/js/orderLineMenu.js"></script>
